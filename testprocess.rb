@@ -23,45 +23,24 @@ end
 
 puts "end of read sample reverse"
 
-fromNode = fromHash.keys
-toNode = toHash.keys
-totalNode = (fromNode + toNode).uniq
-sampleArray = []
+testArray = []
 
-i = 0
-j = 0
-
-while i < 10000
-	sampleFrom = fromNode[rand(fromNode.length)]
-	toArray = fromHash[sampleFrom]
-	sampleTo = toArray[rand(toArray.length)]
-	samplePair = [sampleFrom,sampleTo]
-	if !sampleArray.include?samplePair
-		sampleArray << samplePair
-		i += 1
+File.open("test-public.txt", "r") do |file|
+	line = file.gets
+	while line = file.gets
+		lineArray = line.split(/[\t\r\n]/)
+		testArray << [lineArray[1],lineArray[2]]
 	end
 end
 
-while j < 10000
-	sampleFrom = totalNode[rand(totalNode.length)]
-	sampleTo = totalNode[rand(totalNode.length)]
-	samplePair = [sampleFrom,sampleTo]
-	if (sampleFrom != sampleTo) && (!sampleArray.include?samplePair)
-		if (fromHash[sampleFrom] == nil) || (!fromHash[sampleFrom].include?sampleTo)
-			sampleArray << samplePair
-			j += 1
-		end
-	end
-end
+puts "end of read test"
 
-puts "end of generate sample node pair"
-
-CSV.open("result.csv", "w+") do |w|
+CSV.open("testresult.csv", "w+") do |w|
 	w << ["Id","from","to","fromout","fromin","toout","toin","width","exist"]
-	for i in 0..sampleArray.length-1
+	for i in 0..testArray.length-1
 		id = i + 1
-		from = sampleArray[i][0]
-		to = sampleArray[i][1]
+		from = testArray[i][0]
+		to = testArray[i][1]
 
 		if fromHash[from] == nil
 			fromHash[from] = []
@@ -82,11 +61,7 @@ CSV.open("result.csv", "w+") do |w|
 		toin = toHash[to].length
 
 		width = (fromHash[from] & toHash[to]).length
-		if fromHash[from].include?to
-			exist = 1
-		else
-			exist = 0
-		end
+		exist = "?"
 		w << [id,from,to,fromout,fromin,toout,toin,width,exist]
 	end
 end
