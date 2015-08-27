@@ -32,7 +32,7 @@ i = 0
 j = 0
 
 
-while i < 100000
+while i < 10000
 	sampleFrom = fromNode[rand(fromNode.length)]
 	toArray = fromHash[sampleFrom]
 	sampleTo = toArray[rand(toArray.length)]
@@ -44,7 +44,7 @@ while i < 100000
 	end
 end
 
-while j < 100000
+while j < 10000
 	sampleFrom = fromNode[rand(fromNode.length)]
 	sampleTo = totalNode[rand(totalNode.length)]
 	samplePair = [sampleFrom,sampleTo]
@@ -59,7 +59,7 @@ end
 
 puts "end of generate sample node pair"
 
-CSV.open("result.csv", "w+") do |w|
+CSV.open("result_2.csv", "w+") do |w|
 	w << ["Id","from","to","fromout","fromin","toout","toin","width","exist"]
 
 	for i in 0..sampleArray.length-1

@@ -1,6 +1,6 @@
 result = Array.new
 
-File.open("submission.txt", "r") do |file|
+File.open("submission_200k_logistic.txt", "r") do |file|
 	line_1 = file.gets
 	
 	
@@ -11,7 +11,7 @@ File.open("submission.txt", "r") do |file|
 	end
 end
 
-File.open("submission.csv", "w") do |file|
+File.open("submission_200k_logistic.csv", "w") do |file|
 	line_1 = "Id,Prediction\n"
 	file.write(line_1)
 
